@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.db.bizB.mapper.BizBMapper">
+    <select id="selectAllList" resultType="com.example.db.bizB.dto.BizBUserDto">
+        SELECT * FROM USER
+    </select>
+
+    <select id="selectUserById" parameterType="long" resultType="com.example.db.bizB.dto.BizBUserDto">
+        SELECT * FROM USER WHERE ID=(#{id , jdbcType=BIGINT})
+    </select>
+
+    <insert id="insertList" parameterType="com.example.db.bizB.dto.BizBUserDto">
+        INSERT INTO USER (ID, NAME) VALUES (#{id , jdbcType=BIGINT}, #{name, jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertMap" parameterType="Map">
+        INSERT INTO USER
+        <foreach item="value" index="key" collection="_parameter.entrySet()" open="(" separator="," close=")">
+            ${key}
+        </foreach>
+        VALUES
+        <foreach item="value" index="key" collection="_parameter.entrySet()" open="(" separator="," close=")">
+            #{value}
+        </foreach>
+    </insert>
+
+    <select id="selectMap" parameterType="Map" resultType="HashMap">
+        SELECT * FROM USER WHERE ID=(#{id})
+    </select>
+
+
+</mapper>
